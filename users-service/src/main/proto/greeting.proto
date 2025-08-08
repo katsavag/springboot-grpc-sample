@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.katsadourose.grpc_sample.users_service";
+
+package greeting;
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+service GreetingService {
+  rpc Greet(HelloRequest) returns (HelloReply);
+}

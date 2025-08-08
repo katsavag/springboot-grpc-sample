@@ -1,0 +1,13 @@
+### Greet Service - Say Hello
+GRPC localhost:9090/greeting.GreetingService/Greet
+
+{
+  "name": "John"
+}
+
+### Greet Service - Say Hello (another example)
+GRPC localhost:9090/greeting.GreetingService/Greet
+
+{
+  "name": "Alice"
+}
