@@ -362,3 +362,142 @@ com.example.project.model
 4. **Package by Feature**: Consider organizing by feature rather than by layer for large applications
 
 The default package is primarily useful for quick experiments, small test programs, or learning exercises, but should not be used in production code.
+
+# Polymorphism in Java
+Polymorphism is one of the core principles of object-oriented programming in Java. The word "polymorphism" comes from Greek, meaning "many forms." In programming, it refers to the ability of an object to take on many forms.
+## Key Concepts of Polymorphism
+### 1. Method Overriding
+This is when a subclass provides a specific implementation of a method that is already defined in its parent class.
+``` java
+class Animal {
+    public void makeSound() {
+        System.out.println("Some generic sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Meow!");
+    }
+}
+```
+### 2. Method Overloading
+This occurs when multiple methods in the same class have the same name but different parameters.
+``` java
+class Calculator {
+    // Method with two int parameters
+    public int add(int a, int b) {
+        return a + b;
+    }
+    
+    // Method with three int parameters
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    // Method with two double parameters
+    public double add(double a, double b) {
+        return a + b;
+    }
+}
+```
+## Types of Polymorphism in Java
+### 1. Compile-time Polymorphism (Static Binding)
+Method overloading is a type of compile-time polymorphism. The compiler determines which method to call based on the method signature.
+### 2. Runtime Polymorphism (Dynamic Binding)
+Method overriding is an example of runtime polymorphism. The JVM determines which method to call at runtime based on the actual object type.
+``` java
+public class Main {
+    public static void main(String[] args) {
+        // Runtime polymorphism
+        Animal myPet = new Dog(); // Dog object referred by Animal reference
+        myPet.makeSound();        // Outputs "Woof!" not "Some generic sound"
+        
+        myPet = new Cat();        // Now myPet refers to a Cat object
+        myPet.makeSound();        // Outputs "Meow!"
+    }
+}
+```
+## Benefits of Polymorphism
+1. **Code Reusability**: Use the same method name across different classes.
+2. **Flexibility**: Write code that can work with objects of multiple types.
+3. **Extensibility**: Easily extend functionality without modifying existing code.
+4. **Maintainability**: Changes to one implementation don't affect others.
+
+## Real-world Example
+Polymorphism is used extensively in frameworks like Spring, Hibernate, or Android SDK, where you often override methods from parent classes or interfaces to provide your custom behavior.
+``` java
+// In Android development
+public class MyActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // Your custom implementation
+    }
+}
+```
+Polymorphism is a powerful concept that makes your code more flexible and maintainable by allowing you to work with objects at a more abstract level.
+
+# Interface vs Abstract Class in Java
+
+## Key Differences
+
+### 1. Implementation and Methods
+- **Interface**: Can contain abstract, default, static, and private methods (since Java 8/9)
+- **Abstract Class**: Can contain both abstract and concrete methods with any access modifier
+
+### 2. Inheritance
+- **Interface**: Classes can implement multiple interfaces
+- **Abstract Class**: Classes can extend only one abstract class (single inheritance)
+
+### 3. Variables
+- **Interface**: Only constants (public static final)
+- **Abstract Class**: Can have instance variables with any access modifier
+
+### 4. Constructors
+- **Interface**: Cannot have constructors
+- **Abstract Class**: Can have constructors that are called during subclass instantiation
+
+### 5. Purpose
+- **Interface**: Defines a contract ("can do" relationship)
+- **Abstract Class**: Provides a common base for related classes ("is-a" relationship)
+
+## When to Use
+
+**Use an Interface when:**
+- You need multiple inheritance
+- You want unrelated classes to implement common behavior
+- You want to define what classes can do, not how they do it
+
+**Use an Abstract Class when:**
+- You need to share code among closely related classes
+- You need instance variables and non-public methods
+- You need constructors
+- You want to provide a partial implementation as a template
+
+Despite the narrowing gap between them (with default methods in Java 8+), they still serve different design purposes in modern Java.
+
+# Explain the difference between Comparable and Comparator interfaces in Java, and when you would choose one over the other.
+## Answer
+- **Comparable** (`java.lang.Comparable`)
+  - Provides natural ordering for a class
+  - Implemented by the class itself via `compareTo(T o)` method
+  - Allows only one sorting sequence per class
+  - Used when there's a clear default way to sort objects
+
+- **Comparator** (`java.util.Comparator`)
+  - Defines custom ordering strategies
+  - Implemented in separate classes via `compare(T o1, T o2)` method
+  - Allows multiple sorting sequences for the same class
+  - Used when sorting needs to be independent of the class or when multiple sort criteria are needed
+
+Choose Comparable for defining a class's inherent ordering, and Comparator when you need flexibility or can't modify the original class.
